@@ -36,6 +36,7 @@ def decoder(text: str) -> str:
     print(alphabet_frequency)
     for i in range(len(frequency)):
         new_text = new_text.replace(frequency[i][0], alphabet_frequency[i][0])
+
         #print('\n', new_text)
     print(len(frequency), len(alphabet_frequency))
     print()
