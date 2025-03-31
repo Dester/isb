@@ -35,4 +35,3 @@ def read_json_file(filename: str) -> str:
             return json.load(file)
     else:
         raise FileNotFoundError("File not found")
-

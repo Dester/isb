@@ -13,7 +13,7 @@ def encode(text: str, alphabet: str,  key: int) -> str:
     if key is None:
         raise ValueError("Key not found")
     encrypted_text = ""
-    for i in text:
+    for i in text.lower():
         if i in alphabet:
             encrypted_text += alphabet[(alphabet.index(i)-key) % len(alphabet)]
         else:
@@ -36,7 +36,7 @@ def decode(text: str, alphabet: str, key: int) -> str:
     if key is None:
         raise ValueError("Key not found")
     decrypted_text = ""
-    for i in text:
+    for i in text.lower():
         if i in alphabet:
             decrypted_text += alphabet[(alphabet.index(i)+key) % len(alphabet)]
         else:
