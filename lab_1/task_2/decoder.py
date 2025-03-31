@@ -26,11 +26,17 @@ def decoder(text: str) -> str:
     """
     if text is None:
         return ""
-    new_text = text
-    frequency = char_frequency(text)
-    alphabet_frequency = read_json_file("settings.json")["frequency"]
-    for i in frequency:
-        for j in alphabet_frequency:
-            if frequency[i] == alphabet_frequency[j]:
-                new_text[i] = alphabet_frequency[j]
+    new_text = str(text)
+    a = ""
+    frequency1 = char_frequency(text)
+    del frequency1['\n']
+    frequency = sorted(frequency1.items(), key=lambda item: item[1])
+    print(frequency)
+    alphabet_frequency = sorted(read_json_file("task_2/settings.json")["frequency"].items(), key=lambda item: item[1])
+    print(alphabet_frequency)
+    for i in range(len(frequency)):
+        new_text = new_text.replace(frequency[i][0], alphabet_frequency[i][0])
+        #print('\n', new_text)
+    print(len(frequency), len(alphabet_frequency))
+    print()
     return new_text
