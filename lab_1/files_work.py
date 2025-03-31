@@ -31,7 +31,8 @@ def read_json_file(filename: str) -> str:
     :return: считанные данные из файла
     """
     if filename is not None:
-        with open(filename) as file:
+        with open(filename, "r", encoding="utf-8") as file:
             return json.load(file)
     else:
         raise FileNotFoundError("File not found")
+
