@@ -24,7 +24,7 @@ def write_txt_file(filename: str, text: str) -> None:
         file.write(text)
 
 
-def read_json_file(filename: str) -> str:
+def read_json_file(filename: str) -> dict:
     """
     Считывает данные из json файла
     :param filename: название файла в формате json
