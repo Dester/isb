@@ -2,6 +2,11 @@ import java.util.Random;
 
 public class Random128Bit {
     public static void main(String[] args) {
+    /**
+         * Генерирует случайную последовательность битов (0 и 1) и выводит её в консоль
+         *
+         * @param args Аргументы командной строки (не используются)
+    */
         Random random = new Random();
         byte[] bytes = new byte[16]; // 16 bytes = 128 bits
         random.nextBytes(bytes);

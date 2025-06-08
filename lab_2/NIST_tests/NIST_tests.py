@@ -1,5 +1,6 @@
 import math
 from scipy.special import gammainc
+from files_work.files_work import read_json_file
 
 
 def bit_frequency_test(sequence: str) -> float:
@@ -46,26 +47,30 @@ def longest_one_sequence_test(sequence: str) -> float:
     :param sequence: бинарная последовательность
     :return: P-значение последовательности
     """
-    p = [0.2148, 0.3672, 0.2305, 0.1875]
+    p = read_json_file("NIST_tests/settings.json")["pi"]
+    block_length = read_json_file("NIST_tests/settings.json")["block_length"]
     v = [0, 0, 0, 0]
     n = len(sequence)
-    for i in range(0, n, 8):
+    for i in range(0, n, block_length):
         max_length = 0
         current_length = 0
-        for j in sequence[i: i + 8]:
+        for j in sequence[i: i + block_length]:
             if j:
                 current_length += 1
                 max_length = max(current_length, max_length)
             else:
                 current_length = 0
-        if max_length <= 1:
-            v[0] += 1
-        elif max_length == 2:
-            v[1] += 1
-        elif max_length == 3:
-            v[2] += 1
-        else:
-            v[3] += 1
+        match max_length:
+            case 0:
+                v[0] += 1
+            case 1:
+                v[0] += 1
+            case 2:
+                v[1] += 1
+            case 3:
+                v[2] += 1
+            case _:
+                v[3] += 1
     x = 0
     for i in range(0, 4):
         x += (v[i] - 16 * p[i]) ** 2 / (16 * p[i])
