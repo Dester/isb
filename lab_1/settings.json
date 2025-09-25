@@ -1,0 +1,12 @@
+{
+  "paths": {
+    "key": "key.pem",
+    "encrypted_key": "encrypted_key.pem",
+    "open_key": "open_key.pem",
+    "closed_key": "closed_key.pem",
+    "text": "text.txt",
+    "text1": "text1.txt",
+    "encrypted_text": "encrypted_text.txt",
+    "decrypted_text": "decrypted_text.txt"
+  }
+}
