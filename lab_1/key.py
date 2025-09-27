@@ -15,40 +15,46 @@ def gen_symmetric_key(byte: int) -> bytes:
     return os.urandom(byte)
 
 
-def serialization_private_key(filename: str) -> None:
+def gen_asymmetric_keys() -> tuple:
     """
-    генерирует и сериализует приватный ключ
+    генерирует приватный и публичный ключ
+    :return: кортеж: приватный ключ, публичный ключ
+    """
+    keys = rsa.generate_private_key(
+        public_exponent=65537,
+        key_size=2048
+    )
+    public_key = keys.public_key()
+    return keys, public_key
+
+
+def serialization_private_key(private_key, filename: str) -> None:
+    """
+    сериализует приватный ключ
+    :param private_key: приватный ключ
     :param filename: файл в который сериализуется приватный ключ
     """
     try:
-        keys = rsa.generate_private_key(
-            public_exponent=65537,
-            key_size=2048
-        )
         with open(filename, 'wb') as private_out:
-            private_out.write(keys.private_bytes(encoding=serialization.Encoding.PEM,
-                                                 format=serialization.PrivateFormat.TraditionalOpenSSL,
-                                                 encryption_algorithm=serialization.NoEncryption()))
+            private_out.write(private_key.private_bytes(encoding=serialization.Encoding.PEM,
+                                                        format=serialization.PrivateFormat.TraditionalOpenSSL,
+                                                        encryption_algorithm=serialization.NoEncryption()))
     except PermissionError as exc:
         print("File access denied, ", exc)
     except Exception as exc:
         print("Error reading from file, ", exc)
 
 
-def serialization_public_key(filename: str):
+def serialization_public_key(public_key, filename: str):
     """
-    генерирует и сериализует публичный ключ
+    сериализует публичный ключ
+    :param public_key: публичный ключ
     :param filename: файл в который сериализуется публичный ключ
     """
     try:
-        keys = rsa.generate_private_key(
-            public_exponent=65537,
-            key_size=2048
-        )
-        key = keys.public_key()
         with open(filename, 'wb') as public_out:
-            public_out.write(key.public_bytes(encoding=serialization.Encoding.PEM,
-                                              format=serialization.PublicFormat.SubjectPublicKeyInfo))
+            public_out.write(public_key.public_bytes(encoding=serialization.Encoding.PEM,
+                                                     format=serialization.PublicFormat.SubjectPublicKeyInfo))
     except PermissionError as exc:
         print("File access denied, ", exc)
     except Exception as exc:
@@ -113,4 +119,4 @@ def decrypt_key(decryption_key: bytes, private_key):
     dc_key = private_key.decrypt(decryption_key,
                                  padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(),
                                               label=None))
-    return dc_key.decode('UTF-8')
+    return dc_key

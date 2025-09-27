@@ -7,6 +7,7 @@
     "text": "text.txt",
     "text1": "text1.txt",
     "encrypted_text": "encrypted_text.txt",
-    "decrypted_text": "decrypted_text.txt"
+    "decrypted_text": "decrypted_text.txt",
+    "nonce": "nonce.txt"
   }
 }
